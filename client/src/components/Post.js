@@ -1,15 +1,17 @@
-import React, { useState, useEffect, } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { List, Segment, Button, } from "semantic-ui-react"
 import PostForm from "./PostForm"
+import {AuthContext, } from "../providers/AuthProvider"
 
 
 const Post = () => {
 const [posts, setPosts] = useState([])
 const [showForm, setShowForm] = useState(false)
+const {user, } = useContext(AuthContext)
 
 useEffect( () => {
-  axios.get("/api/posts")
+  axios.get(`/api/user/${user.id}posts`)
   .then( res => setPosts(res.data))
 }, [])
 
@@ -20,6 +22,7 @@ useEffect( () => {
       <List.Description>
         { post.body }
       </List.Description>
+     {/* <List.Meta>{post.created_at}</List.Meta> */}
     </Segment>
     ))
     

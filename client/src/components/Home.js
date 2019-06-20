@@ -55,6 +55,11 @@ const Home = (props) => {
             <Grid.Row>
              <Grid.Column width={4}>
                 <Image src='https://picsum.photos/200' />
+                <Header>{user.nickname} Profile</Header>
+             <hr/>
+              <p>Name: {user.name}</p>
+              <p>Email: {user.email}</p>
+              <p></p>
                </Grid.Column>
                <Grid.Column width={12}>
             
@@ -63,19 +68,12 @@ const Home = (props) => {
            </Grid.Row>
   
           <Grid.Row>
-             <Grid.Column width={4}>
-             <p>{user.nickname} Profile</p>
-             <hr/>
-              <p>Name: {user.name}</p>
-              <p>Email: {user.email}</p>
-            
-             </Grid.Column>
-             <Grid.Column width={8}>
+             <Grid.Column width={10}>
              <Header>UrSpace News Field</Header>
              <hr/>
               <p>Other users posts will go here</p>
              </Grid.Column>
-            <Grid.Column width={4}>
+            <Grid.Column width={6}>
             <Header>Know These Robots?</Header>
             <hr/>
              {renderPeople()}
