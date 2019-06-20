@@ -7,10 +7,6 @@ export const AuthConsumer = AuthContext.Consumer
 export class AuthProvider extends React.Component {
   state = { 
     user: null,
-    name: '',
-    nickname: '',
-    email: '',
-    dateJoined: '12/12/12',
     updateProfile: (profile) => this.updateProfile(profile),
 
   }

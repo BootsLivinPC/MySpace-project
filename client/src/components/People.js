@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Container, Header, Button, Icon, Grid } from "semantic-ui-react"
+import {Card, Container, Header, Button, Icon, Grid, Image } from "semantic-ui-react"
 import axios from 'axios';
 import { Link, } from 'react-router-dom'
 import StyledCard from "../styles/StyledCard"
@@ -28,15 +28,16 @@ showPeople = () => {
   return people.map( person => (
     <Link to={`people/${person.id}`}>
     <div>
-    <StyledCard key={person.id}>
+    <StyledCard key={people.id}>
      <Card.Content>
+       <Image src={person.avatar} />
        <Header style={{
               fontSize: "20px",
               height: '40px',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-            }}>{ person.firstName } { person.lastName }</Header>
+            }}>{ person.lastName }</Header>
        <Card.Meta>{ person.nickName } </Card.Meta>
      </Card.Content>
     

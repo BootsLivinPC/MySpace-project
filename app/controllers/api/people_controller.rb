@@ -1,20 +1,17 @@
 class Api::PeopleController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_user
-  before_action :set_person, only: [:show, :update, :destroy]
-
+before_action :authenticate_user!
+before_action :set_people, only: [:show, :update, :destroy]
 
   def index
-    render json: @user.person.all
-
+    render json: Person.all
   end
 
-  def show  
+  def show
     render json: @person
   end
 
   def create
-    person = @user.person.new(person_params)
+    person = Person.new(person_params)
     if person.save
       render json: person
     else
@@ -24,27 +21,24 @@ class Api::PeopleController < ApplicationController
 
   def update
     if @person.update(person_params)
-      render json: person
+      render json: @person
     else
-      render json: person.errors, status: 422
+      render json: @person.errors, status: 422
     end
   end
 
   def destroy
     @person.destroy
   end
-
   private
-  
   def set_person
     @person = Person.find(params[:id])
   end
 
-  def set_user
-    @user = User.find(params[:id])
-  end  
-  
   def person_params
-    params.require(:person).permit(:firstName, :lastName, :email, :nickName)
+    params.require(:person).permit(:firstName, :lastName, :email, :nickName, :avatar, :description, :job, :hobbies, :phoneNum, :user_id)
   end
+
 end
+
+

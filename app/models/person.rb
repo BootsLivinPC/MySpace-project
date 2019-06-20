@@ -1,3 +1,4 @@
 class Person < ApplicationRecord
-  belongs_to :user
+  # belongs_to :user
+  has_many :posts
 end

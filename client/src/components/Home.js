@@ -1,27 +1,90 @@
-import React from 'react';
-import { Header, } from 'semantic-ui-react';
-// import Profile from "../components/Profile"
+import React, {useState, useContext, useEffect } from 'react';
+import { Header, Card, Image, Icon, Button, Grid } from 'semantic-ui-react';
+import axios from 'axios'
+import { AuthContext, } from "../providers/AuthProvider";
+import Post from "./Post"
+
+const Home = (props) => {
+  const {user,} = useContext(AuthContext)
+  const [people, setPeople] = useState([])
 
 
+  useEffect( () => {
+    axios.get("/api/people")
+    .then( res => setPeople(res.data))
+  }, [])
 
-class Home extends React.Component {
-
-
-  render() {
-    return (
-      <Header>YourSpace</Header>
-      //  <Profile/>
-      
-
-
-      
-
-    )
+  
+   const sample = () => {
+     if (people.length) {
+       const index = Math.floor(Math.random() * people.length)
+       return people[index]
+      } else {
+        return null
+      }
+   }
+  
+  const renderPeople = () => {
+    const person = sample()
+    if (person) {
+   return (
+    <Card key={person.id}>
+    <Image src={person.avatar} />
+     <Card.Content>
+       <Card.Header>{person.lastName} {}</Card.Header>
+        <Card.Description>{ person.description}</Card.Description>
+       <Card.Meta>{ person.job }</Card.Meta>
+     </Card.Content>
+      <Card.Content extra>
+        <Button color='red' icon basic>
+         <Icon name="thumbs down" />
+          </Button>
+          <Button color='green' icon basic>
+          <Icon name="thumbs up" />
+          </Button>
+      </Card.Content>
+    </Card>
+     )
+    }  else {
+    return <Header textAlign="center">No More People</Header> }
   }
-      
-
-
-    
-}
-
+  
+      return (
+      <div>
+       <Grid celled>
+            <Grid.Row>
+             <Grid.Column width={4}>
+                <Image src='https://picsum.photos/200' />
+               </Grid.Column>
+               <Grid.Column width={12}>
+            
+              <Post/>
+             </Grid.Column>
+           </Grid.Row>
+  
+          <Grid.Row>
+             <Grid.Column width={4}>
+             <p>{user.nickname} Profile</p>
+             <hr/>
+              <p>Name: {user.name}</p>
+              <p>Email: {user.email}</p>
+            
+             </Grid.Column>
+             <Grid.Column width={8}>
+             <Header>UrSpace News Field</Header>
+             <hr/>
+              <p>Other users posts will go here</p>
+             </Grid.Column>
+            <Grid.Column width={4}>
+            <Header>Know These Robots?</Header>
+            <hr/>
+             {renderPeople()}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+    </div>
+    )
+   }
+  
+  
 export default Home;

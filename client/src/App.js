@@ -9,7 +9,9 @@ import { Container, } from "semantic-ui-react";
 import FetchUser from './components/FetchUser'
 import ProtectedRoute from './components/ProtectedRoute'
 import People from './components/People'
-import PersonForm from './components/ProfileForm'
+import ProfileForm from './components/ProfileForm'
+import MyFriends from './components/MyFriends'
+
 
 const App = () => (
   <Fragment>
@@ -19,10 +21,11 @@ const App = () => (
       <Switch>
         {/* <Route exact path="/" component={Home} /> */}
         <ProtectedRoute exact path="/" component={Home} />
+        <ProtectedRoute exact path="/my_friends" component={MyFriends} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/people" component={People} />
-        <Route exact path="/person/new" component={PersonForm} />
+        <Route exact path="/person/new" component={ProfileForm} />
 
         <Route component={NoMatch} />
       </Switch>

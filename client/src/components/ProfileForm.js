@@ -4,8 +4,8 @@ import { Form, Container, Button} from 'semantic-ui-react'
 
 
 
-class PersonForm extends React.Component {
-  state = { firstName: '', lastName: '', email: '', nickName: '', }
+class ProfileForm extends React.Component {
+  state = { firstName: '', lastName: '', email: '', nickName: '', hobbies: '', }
 
   componentDidMount() {
 const { match: {params: {id, } } } = this.props
@@ -13,9 +13,8 @@ const { match: {params: {id, } } } = this.props
 if (id)
 axios.get(`/api/people/${id}`)
 .then(res => {
-  debugger
-  const {firstName, lastName, email, nickName } = res.data
-  this.setState({ firstName, lastName, email, nickName })
+  const {firstName, lastName, email, nickName, hobbies} = res.data
+  this.setState({ firstName, lastName, email, nickName, hobbies })
 })
 .catch(err => {
   console.log(err.response)
@@ -33,16 +32,15 @@ axios.get(`/api/people/${id}`)
     const { match: { params: { id } }, history: { push } } = this.props
     if (id) {
       axios.put(`/api/people/${id}`, person)
-        .then(res => push(`/person/${id}`))
+        .then(res => push(`/people/${id}`))
     } else {
       axios.post(`/api/people`, person)
         .then(res => push(`/people/${res.data.id}`))
-        debugger
     }
   }
 
    render() {
-     const { firstName, lastName, email, nickName, } = this.state
+     const { firstName, lastName, email, nickName, hobbies } = this.state
      return (
        <Container style={{marginTop: "100px"}}>
        <Form onSubmit={this.handleSubmit}>
@@ -69,8 +67,15 @@ axios.get(`/api/people/${id}`)
           />
        <Form.Input
             name="nickName"
-            placeholder="NickName"
+            placeholder="Nickname"
             value={nickName}
+            onChange={this.handleChange}
+            required
+          />
+       <Form.Input
+            name="hobbies"
+            placeholder="Hobbies"
+            value={hobbies}
             onChange={this.handleChange}
             required
           />
@@ -81,4 +86,4 @@ axios.get(`/api/people/${id}`)
    }
 }
 
-export default PersonForm
+export default ProfileForm
