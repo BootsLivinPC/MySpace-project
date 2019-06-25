@@ -1,9 +1,9 @@
 class Api::PeopleController < ApplicationController
 before_action :authenticate_user!
-before_action :set_people, only: [:show, :update, :destroy]
+before_action :set_person, only: [:show, :update, :destroy]
 
   def index
-    render json: Person.all
+    render json: User.random_person(current_user.liked_people)
   end
 
   def show
@@ -20,11 +20,17 @@ before_action :set_people, only: [:show, :update, :destroy]
   end
 
   def update
-    if @person.update(person_params)
-      render json: @person
-    else
-      render json: @person.errors, status: 422
-    end
+    # if @person.update(person_params)
+    #   render json: @person
+    # else
+    #   render json: @person.errors, status: 422
+    # end
+    current_user.liked_people << params[:id].to_i
+    current_user.save
+  end
+
+  def my_people
+    render json: User.liked(current_user.liked_people)
   end
 
   def destroy
@@ -36,7 +42,7 @@ before_action :set_people, only: [:show, :update, :destroy]
   end
 
   def person_params
-    params.require(:person).permit(:firstName, :lastName, :email, :nickName, :avatar, :description, :job, :hobbies, :phoneNum, :user_id)
+    params.require(:person).permit(:firstName, :lastName, :email, :nickName, :avatar, :description, :job, :hobbies, :phoneNum)
   end
 
 end

@@ -4,7 +4,7 @@
     lastName: Faker::Name.last_name,
     hobbies: Faker::Hacker.say_something_smart,
     job: Faker::Job.title,
-    avatar: Faker::Avatar.image("my-own-slug", "200x150", "jpg"),
+    avatar: Faker::Avatar.image("my-own-slug", "100x100", "jpg"),
     description: Faker::TvShows::RickAndMorty.quote,
     nickName: Faker::Ancient.hero,
     email: Faker::Internet.email,

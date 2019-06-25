@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
   resources :people do
     resources :posts
+    
  end
 end
 
@@ -13,4 +14,9 @@ end
   end
 end
 
+   namespace :api do
+    resources :people, only: [:update]
+  get 'my_people', to: 'people#my_people'
+   
+  end
 end

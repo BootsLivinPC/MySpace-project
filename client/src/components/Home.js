@@ -4,7 +4,7 @@ import axios from 'axios'
 import { AuthContext, } from "../providers/AuthProvider";
 import Post from "./Post"
 
-const Home = (props) => {
+const Home = () => {
   const {user,} = useContext(AuthContext)
   const [people, setPeople] = useState([])
 
@@ -24,6 +24,16 @@ const Home = (props) => {
       }
    }
   
+   const downVote = (id) => {
+    // const { cats, } = this.state;
+    setPeople({ people: people.filter( c => c.id !== id ), });
+  }
+    const upVote = (id) => {
+    // const { people, } = this.state;
+    axios.put(`/api/people/${id}`)
+      .then( () => setPeople({ people: people.filter( c => c.id !== id ), }) )
+  }
+
   const renderPeople = () => {
     const person = sample()
     if (person) {
@@ -36,10 +46,10 @@ const Home = (props) => {
        <Card.Meta>{ person.job }</Card.Meta>
      </Card.Content>
       <Card.Content extra>
-        <Button color='red' icon basic>
+        <Button color='red' icon basic onClick={() => downVote(person.id)}>
          <Icon name="thumbs down" />
           </Button>
-          <Button color='green' icon basic>
+          <Button color='green' icon basic onClick={() => upVote(person.id)}>
           <Icon name="thumbs up" />
           </Button>
       </Card.Content>
@@ -55,7 +65,7 @@ const Home = (props) => {
             <Grid.Row>
              <Grid.Column width={4}>
                 <Image src='https://picsum.photos/200' />
-                <Header>{user.nickname} Profile</Header>
+                <Header>{user.nickname}'s Profile</Header>
              <hr/>
               <p>Name: {user.name}</p>
               <p>Email: {user.email}</p>
@@ -71,7 +81,7 @@ const Home = (props) => {
              <Grid.Column width={10}>
              <Header>UrSpace News Field</Header>
              <hr/>
-              <p>Other users posts will go here</p>
+              
              </Grid.Column>
             <Grid.Column width={6}>
             <Header>Know These Robots?</Header>

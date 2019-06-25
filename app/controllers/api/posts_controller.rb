@@ -43,7 +43,7 @@ def set_post
 end
 
 def post_params
-params.require(:post).permit(:title, :body)
+params.require(:post).permit(:title, :body, :person_id, :user_id)
 end
 
 end
